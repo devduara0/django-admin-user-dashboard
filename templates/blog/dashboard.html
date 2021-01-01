@@ -1,0 +1,71 @@
+{% extends 'blog/dash_base.html' %}
+{% load static %}
+
+
+
+{% block title %} | Dashboard ya mtumiaji {% endblock %}
+{% block content %}
+<section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+	    <h1 class="display-4">Karibu {{ user.first_name }} kwenye Dashboard yako</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'post_index' %}">
+              <i class="fa fa-home fa-2x"></i> Nyumbani</a>
+          </li>
+          <li class="breadcrumb-item">  
+		    <a class="btn btn-success" href="{% url 'post_new' %}">
+			<i class="fa fa-pencil fa-2x"></i>Andika makala</a>
+		</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+  <section id="dashboard" class="py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Dhibiti machapisho yako {{ user.first_name }}</h2>
+		   {% for post in user_posts %}
+            {% if post %}
+			<div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Tarehe</th>
+                  <th scope="col">Mchapishaji</th>
+				  <th scope="col">Jina la chapisho</th>
+                  <th></th>
+				  <th></th>			  
+                </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td>{{ post.published_date }}</td>
+                    <td>{{ post.author }}</td>
+		            <td>{{ post.title }}</td>
+                	<td><a class="btn btn-warning" href="{% url 'post_edit' pk=post.pk %}"><i class="fa fa-pencil fa-2x"></i>Hariri</a> </td>
+                    <td><a class="btn btn-danger" href="{% url 'post_remove' pk=post.pk %}"><i class="fa fa-times fa-2x"></i>Ondoa</a></td>					
+                </tr>                
+              </tbody>
+            </table>
+             {% else %}
+            <p>Huja andika chapisho lolote lile</p>
+            {% endif %}
+			{% endfor %}
+        </div>
+      </div>
+    </div>
+	</div>
+  </section>
+  {% endblock %}
